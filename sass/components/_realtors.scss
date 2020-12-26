@@ -1,0 +1,83 @@
+.realtors {
+  background-color: $color-secondary;
+  grid-column: col-start 7 / full-end;
+  padding: 3rem;
+
+  display: grid;
+  /*
+    center the grid within the container
+  */
+  align-content: center;
+  justify-content: center;
+
+  /*
+    center the items horizontally inside the grid
+    the list is main content of the grid and so it is already centered and this
+    visually only centers the heading
+  */
+  justify-items: center;
+
+  /*
+    gap between header text and realtor list
+  */
+  row-gap: 2rem;
+
+  /*
+    realtors under header section, spans across the width of the page
+  */
+  @media only screen and (max-width: $bp-medium) {
+    grid-column: 1 / -1;
+  }
+
+  &__list {
+    /*
+        the main grid we use to style the realtors
+    */
+    display: grid;
+    /*
+        min-content for the image to have the column fit the image
+        max-content for the text so that it will try not to cause a line
+        break 
+    */
+    grid-template-columns: min-content max-content;
+    column-gap: 2rem;
+    /*
+        on a very large screen the list is just sitting there with a lot of
+        space around it, using vh helps resize the space
+    */
+    row-gap: 5vh;
+    /*
+        allows the text to appear at the center vertically aligned with the
+        images
+    */
+    align-items: center;
+
+    /*
+      min content - for images
+      max content - for text
+      pic text pic text pic text
+    */
+    @media only screen and (max-width: $bp-medium) {
+        grid-template-columns: repeat(3, min-content max-content);
+    }
+
+    /*
+      realtors one below each other
+    */
+    @media only screen and (max-width: $bp-small) {
+        grid-template-columns: min-content max-content;
+    }
+  }
+
+  &__img {
+    width: 7rem;
+    border-radius: 50%;
+    display: block;
+  }
+
+  &__sold {
+    text-transform: uppercase;
+    color: $color-grey-light-2;
+    margin-top: -3px;
+  }
+}

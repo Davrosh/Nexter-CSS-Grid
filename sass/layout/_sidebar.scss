@@ -1,0 +1,74 @@
+ 
+.sidebar {
+    background-color: $color-primary;
+
+    grid-column: sidebar-start / sidebar-end;
+    grid-row: 1 / -1;
+
+    /*
+        simple fix: the nav-btn child is now positioned horizontally
+    */
+    display: flex;
+    justify-content: center;
+
+
+    /*
+        move the sidebar to the top and the hamburger button to its center right
+    */
+    @media only screen and (max-width: $bp-large) {
+        grid-column: 1 / -1;
+        grid-row: 1 / 2;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+.nav-btn {
+    border: none;
+    border-radius: 0;
+
+    background-color: #fff;
+    height: 2px;
+    width: 4.5rem;
+
+    /*
+        so that it doesn't overflow the page and that we can see it
+    */
+    margin-top: 4rem;
+
+    /*
+        two other pieces of the hamburger menu
+    */
+    &::before, &::after {
+        background-color: #fff;
+        height: 2px;
+        width: 4.5rem;
+        content: "";
+        display: block;
+    }
+
+    &::before {
+        transform: translateY(-1.5rem);
+    }
+
+    &::after {
+        /*
+            it is different because the space where we start counting is not
+            really in the center
+        */
+        transform: translateY(1.3rem);
+    }
+
+    /*
+        resize the hamburger to fit more naturally
+    */
+    @media only screen and (max-width: $bp-large) {
+        margin-top: 0;
+        margin-right: 3rem;
+
+        &::before { transform: translateY(-1.2rem); }
+        &::after { transform: translateY(1rem); }
+    }
+
+
+}

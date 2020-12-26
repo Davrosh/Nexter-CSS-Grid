@@ -1,0 +1,11 @@
+/*
+    reusable margin-bottoms for different areas around the page
+    we do not want to hard-code margin bottom for a REUSABLE component element
+    and so we can simply add an appropriate margin-bottom class in the HTML.
+    helps us plan ahead for the future
+    styling a page using only small classes like that is called 'atomic css'
+*/
+.mb-sm { margin-bottom: 2rem; }
+.mb-md { margin-bottom: 3rem; }
+.mb-lg { margin-bottom: 4rem; }
+.mb-hg { margin-bottom: 8rem; }

@@ -1,0 +1,83 @@
+
+.container {
+  /*
+    an important thing to do - name your columns
+    after hitting new breakpoints, we would like to alter the columns and so if
+    we address them BY NAME the code, we do not need to change the columns we're
+    spanning anywhere
+  */
+
+  display: grid;
+  /*
+        For the first row with the header and company logo - we would like it to
+        resize its height according to the viewport height
+
+        For the second one with the list of features - we would like to have the
+        height adjust automatically when we add new items or resize and
+        min-content makes the box as high as its content and resizes it when the
+        window resizes.
+        So for example, if you are on a device that has a viewport width of
+        400px, the height of the row specified as 40vw, will have a height of
+        160px (400 * 0.4 = 160). 
+
+        For the third one with the stories - we would like its height to
+        decrease as we lower the viewport width instead
+
+        The houses list, gallery and footer elements will take the height of
+        their content.
+    */
+  grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+
+  /*
+    We will make our own custom 8-column grid.
+    A typical framework grid is 1140px wide and with 8 cols it would mean that
+    each col is 1140 / 8 = 140px = 14rem wide.
+
+    We start with an 8 rem sidebar on the left
+    Then, in the middle, we have our 8 cols which are wide enough to fit their
+    content and at most 14rem.
+
+    Then, to achieve a desired space which can be utilized in some of the rows
+    to create a full row design, like in the story of gallery sections, we put
+    two extra columns on either side of our 8 columns. These 2 columns are the
+    first to shrink when we resize the page due to their fr width but they only
+    shrink up to a width of 6rem. When they hit a width of 6rem, the 8 main cols
+    start shrinking.
+  */
+  grid-template-columns:
+    [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr)
+    [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end])
+    [center-end] minmax(6rem, 1fr)
+    [full-end];
+
+  /*     & > * {
+        padding: 40px;
+        font-size: 3rem;
+    } */
+
+  /*
+    we will remove the side bar column on the left and and a row for it on the
+    top
+    the row will be 6rem wide and not 8rem like the above since after hitting
+    this breakpoint 1rem is no longer 10px but 8px
+  */
+  @media only screen and (max-width: $bp-large) {
+    grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+    grid-template-columns: [full-start] minmax(6rem, 1fr) [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 14rem) [col-end]
+      ) [center-end] minmax(6rem, 1fr) [full-end];
+  }
+
+  /*
+    first, the sidebar at the top
+    then, the header section which will be just long enough so that when we
+    begin scrolling down we'll get to the next section
+
+    the next rows will be "min-content-like" on the implicit grid
+    the spaces inside of the calc function ARE NEEDED
+  */
+  @media only screen and (max-width: $bp-medium) {
+    grid-template-rows: 6rem calc(100vh - 6rem);
+  }
+}

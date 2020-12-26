@@ -1,0 +1,126 @@
+.header {
+  background-color: $color-grey-dark-1;
+  grid-column: full-start / col-end 6;
+
+  /* 
+        background image
+  */
+  background-image: linear-gradient(
+      rgba($color-secondary, 0.93),
+      rgba($color-secondary, 0.93)
+    ),
+    url(../img/hero.jpeg);
+  background-size: cover;
+  background-position: center;
+
+  padding: 8rem;
+  /*
+    override for top
+  */
+  padding-top: 4rem;
+
+  /*
+    spaces between lines of text using explicitly setting heights for the rows
+    minmax(6rem, min-content) so that the text doesn't get overlapped on screens
+    where 6rem is too big
+  */
+  display: grid;
+  grid-template-rows: 1fr min-content minmax(6rem, min-content) 1fr;
+
+  /*
+    column should never be wider of narrower than the content
+  */
+  grid-template-columns: minmax(min-content, max-content);
+  row-gap: 1.5rem;
+
+  /*
+    grid is centered horizontally inside its container even when window is
+    resized awkwardly
+  */
+  justify-content: center;
+
+  /*
+    header section spans across the width of the page now that the sidebar is
+    above it and the realtors behind it
+  */
+  @media only screen and (max-width: $bp-medium) {
+    grid-column: 1 / -1;
+  }
+
+  @media only screen and (max-width: $bp-small) {
+      padding: 5rem;
+  }
+
+  &__logo {
+    height: 3rem;
+    justify-self: center;
+  }
+
+  /*
+    without these, the button will simply stretch to fill its container
+  */
+  &__btn {
+    align-self: start;
+    justify-self: start;
+  }
+
+
+  /*
+    To create the seen on effect we will make a new grid
+    The grid items of the new grid are the text itself (text too can be treated
+    as a grid item) and before and after elements, which will be used to create
+    the horizontal lines.
+  */
+  &__seenon-text {
+
+    display: grid;
+    /*
+        max-content and not min-content so that the text doesn't break into a
+        new line
+    */
+    grid-template-columns: 1fr max-content 1fr;
+    column-gap: 1.5rem;
+    align-items: center;
+
+    font-size: 1.6rem;
+    color: $color-grey-light-2;
+
+    &::before,
+    &::after {
+      content: "";
+      height: 1px;
+      display: block;
+      background-color: currentColor;
+    }
+  }
+
+  &__seenon-logos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 3rem;
+    /*
+        center all logos inside of their grid cells
+    */
+    justify-items: center;
+
+    /*
+      align the company logos vertically
+    */
+    align-items: center;
+
+    img {
+      /*
+        set max height so that the images scale down when viewport is resized
+        need to set max width so that it works properly
+        if the corresponding grid column is set to max-content then this would
+        not work, therefore, we'll change it to minmax(min-content, max-content)
+      */
+      max-height: 2.5rem;
+      max-width: 100%;
+      /*
+        more gray
+      */
+      filter: brightness(70%);
+    }
+  }
+}

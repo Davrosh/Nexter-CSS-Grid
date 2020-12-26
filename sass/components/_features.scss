@@ -1,0 +1,86 @@
+.features {
+    grid-column: center-start / center-end;
+
+    margin: 15rem 0;
+
+    /*
+        example of progressive enhancement for older browsers
+    */    
+    @supports(display: grid) {
+
+        display: grid;
+        /*
+            grid-template-rows: auto auto is assumed here
+            since we don't specify the rows here, this is an implicit grid
+        */
+        /* grid-template-columns: repeat(3, 1fr); */
+
+        /*
+            makes it inherently responsive by fitting as many columns to the
+            grid of the width that we define while keeping a minimum width of
+            25rem.
+        */
+        grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+        gap: 6rem;
+
+        /*
+            fix the hugh gap between the title and the text under it.
+            align-items is set to stretch by default.
+            looks a lot better - especially after resizing the viewport
+        */
+        align-items: start;
+    }
+}
+
+/*
+    a component that could be reused anywhere but is semantically related to the
+    features container
+*/
+.feature {
+    /*
+        example of progressive enhancement for older browsers
+    */
+    float: left;
+    width: 33.3333%;
+    margin-bottom: 6rem;
+
+    /*
+        what gets ignored automatically by grid, grid items, flex and flex items
+        is floats, display: inline-block, display: table-cell and vertical align
+        reset width and margin bottom
+    */
+    @supports(display: grid) {
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    /*
+        a grid inside the features grid (inside the overall grid ;) ) -
+        the columns are explicit - the left one holds the icon and is wide
+        enough to make it fit inside it and the other uses the rest of the
+        available space. 
+    */
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    row-gap: 1.5rem;
+    column-gap: 2.5rem;
+
+    &__icon {
+        fill: $color-primary;
+        width: 4.5rem;
+        height: 4.5rem;
+
+        /*
+            now the icon gets the top and bottom row for itself and the text
+            gets pushed rightwards to column 2
+            grid-row: 1 / -1; would NOT work at this case because -1 is the end
+            of the explicit grid and we haven't defined any explicit rows.
+        */
+        grid-row: 1 / span 2;
+        transform: translateY(-1rem);
+    }
+
+    &__text {
+        font-size: 1.7rem;
+    }
+}
